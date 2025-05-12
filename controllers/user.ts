@@ -124,7 +124,7 @@ const symptomCheckHandler = async (req: Request & { user?: decodeUser }, resp: R
         }
         resp.status(201).json({
             message: "User symptoms register successfully",
-            AIResponse: aiResp,
+            AIResponse: aiResp.text,
             symptomsCheckId: result._id
         })
         return 
