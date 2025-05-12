@@ -1,3 +1,5 @@
+import mongoose from "mongoose"
+
 interface signup{
     name: string,
     email: string,
@@ -10,4 +12,8 @@ interface login{
     passwd: string
 }
 
-export {signup, login}
+interface decodeUser{
+    userId: string,
+    email: string
+}
+export {signup, login, decodeUser}
