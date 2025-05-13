@@ -1,19 +1,45 @@
-import mongoose from "mongoose"
-
-interface signup{
+interface iSignup{
     name: string,
     email: string,
     passwd: string,
     profilePic?: string
 }
 
-interface login{
+interface iLogin{
     email: string,
     passwd: string
 }
 
-interface decodeUser{
+interface iDecodeUser{
     userId: string,
     email: string
 }
-export {signup, login, decodeUser}
+
+interface iUserInput{
+    userInput: string
+}
+
+interface iHealthLog {
+  mood?: 'happy' | 'neutral' | 'stressed' | 'tired' | 'sad' | 'anxious'
+
+  energyLvl?: number
+
+  sleepHours?: number
+
+  steps?: number
+  distanceWalked?: number
+  running?: number
+
+  caloriesBurned?: number
+  heartRate?: number
+  bloodPressure?: {
+    systolic: number
+    diastolic: number
+  }
+  oxygenSaturation?: number
+  bloodSugar?: number
+  bodyWeight?: number
+  waterIntake?: number
+}
+
+export {iSignup, iLogin, iDecodeUser, iUserInput, iHealthLog}

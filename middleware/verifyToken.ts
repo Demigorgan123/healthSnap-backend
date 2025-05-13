@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express'
-import { decodeUser } from '../interface/user';
+import { iDecodeUser } from '../interface/user';
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 
 
-const verifyToken = (req: Request & {user?:decodeUser}, res: Response, next: NextFunction) => {
+const verifyToken = (req: Request & {user?:iDecodeUser}, res: Response, next: NextFunction) => {
     const token = req.cookies.access_token
     if (!token) {
         res.status(401).json({ message: 'Access denied. No token provided.' })
