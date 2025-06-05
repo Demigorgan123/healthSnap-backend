@@ -5,15 +5,35 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { iSignup, iLogin } from '../interface/user'
 import 'dotenv/config'
+import uploadOnCloudinary from '../service/uploadCloudinary'
+import fs from 'fs'
 // signupHandler for creating new user
 const signupHandler = async (req: Request<{}, {}, iSignup>, resp: Response) => {
     try {
-        const { name, email, passwd, profilePic } = req.body
+        const { name, email, passwd } = req.body
         if (!name || !email || !passwd) {
             resp.status(400).json({ message: 'Username, email, password is required' })
             return
         }
+
         const hashPasswd = await bcrypt.hash(passwd, 10)
+
+        let profilePic: string | undefined
+        if (req.file) {
+            const uploadRes = await uploadOnCloudinary(`./uploads/${req.file?.filename}`)
+            if (!uploadRes) {
+                resp.status(400).json({ message: 'Failed to upload profile pic' })
+                return
+            }
+            profilePic = uploadRes.secure_url;
+            fs.unlink(`./uploads/${req.file?.filename}`, (err)=>{
+                if(err){
+                    console.log(err)
+                    return
+                }
+                console.log('profile pic deleted successfully')
+            })
+        }
         const result = await userModel.insertOne({
             name: name,
             email: email,
@@ -37,6 +57,7 @@ const signupHandler = async (req: Request<{}, {}, iSignup>, resp: Response) => {
             return
         }
         resp.status(500).json({ message: 'Server error during signup.' })
+        return
     }
 }
 

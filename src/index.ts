@@ -3,6 +3,7 @@ import express from 'express'
 import connectDB from '../config/connectDB'
 import userRouter from '../routes/user'
 import cookieParse from 'cookie-parser'
+import cors from 'cors'
 import 'dotenv/config'
 
 // creating express server app 
@@ -16,6 +17,7 @@ connectDB(DB_URL)
 app.use(express.json())
 app.use(express.urlencoded())
 app.use(cookieParse())
+app.use(cors())
 
 // using user route for handling signup/login
 app.use('/user', userRouter)
