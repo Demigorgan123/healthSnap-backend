@@ -11,7 +11,7 @@ const router = express.Router()
 
 // using router for signup/login
 router.post('/signup', upload.single('profilePic'), signupHandler)
-router.get('/login', loginHandler)
+router.post('/login', loginHandler)
 router.post('/symptomCheck', verifyToken, symptomCheckHandler)
 router.post('/healthLog', verifyToken, createHealthLogHandler)
 router.get('/healthLog', verifyToken, getHealthLogHandler)
