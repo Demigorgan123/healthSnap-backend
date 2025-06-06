@@ -13,6 +13,7 @@ const verifyToken = (req: Request & {user?:iDecodeUser}, res: Response, next: Ne
 
     jwt.verify(token, process.env.SECRET_KEY!, (err: any, user: any) => {
         if (err) {
+            res.clearCookie("access_token")
             res.status(401).json({ message: 'Invalid or expired token.' })
             return
         }
